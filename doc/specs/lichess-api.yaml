@@ -6449,7 +6449,7 @@ paths:
             schema:
               type: object
               properties:
-                secret:
+                providerSecret:
                   type: string
                   example: Dee3uwieZei9ahpaici9bee2yahsai0K
               required:
@@ -9560,7 +9560,7 @@ components:
     ExternalEngineRegistration:
       type: object
       properties:
-        engineName:
+        name:
           type: string
           description: Display name of the engine.
           example: Stockfish 15
@@ -9572,7 +9572,7 @@ components:
           example: 8
           minimum: 1
           maximum: 65536
-        maxHashMib:
+        maxHash:
           type: integer
           description: Maximum available hash table size, in MiB.
           example: 2048
@@ -9590,7 +9590,7 @@ components:
         #    Promises that the engine is a recent official Stockfish release.
         #    Can be considered for cloud evaluation.
         #  required: false
-        secret:
+        providerSecret:
           type: string
           description: |
             A random token that can be used to
@@ -9608,7 +9608,7 @@ components:
           example: Dee3uwieZei9ahpaici9bee2yahsai0K
           minLength: 16
           maxLength: 1024
-        data:
+        providerData:
           type: string
           description: |
             Arbitrary data that the engine provider can use for identification
@@ -9617,10 +9617,10 @@ components:
             Users can read this information, but updating it requires knowing
             or changing the `secret`.
       required:
-        - engineName
+        - name
         - maxThreads
-        - maxHashMib
-        - secret
+        - maxHash
+        - providerSecret
 
     ExternalEngine:
       type: object
@@ -9629,6 +9629,12 @@ components:
           type: string
           description: Unique engine registration ID.
           example: eei_aTKImBJOnv6j
+        name:
+          type: string
+          description: Display name of the engine.
+          example: Stockfish 15
+          minLength: 3
+          maxLength: 200
         clientSecret:
           type: string
           description: |
@@ -9640,19 +9646,13 @@ components:
           type: string
           description: The user this engine has been registered for.
           example: thibault
-        engineName:
-          type: string
-          description: Display name of the engine.
-          example: Stockfish 15
-          minLength: 3
-          maxLength: 200
         maxThreads:
           type: integer
           description: Maximum number of available threads.
           example: 8
           minimum: 1
           maximum: 65536
-        maxHashMib:
+        maxHash:
           type: integer
           description: Maximum available hash table size, in MiB.
           example: 2048
@@ -9664,7 +9664,7 @@ components:
           example: [standard]
           items:
             $ref: '#/components/schemas/VariantKey'
-        data:
+        providerData:
           type: string
           description: |
             Arbitrary data that the engine provider can use for identification
@@ -9676,9 +9676,9 @@ components:
         - id
         - clientSecret
         - userId
-        - engineName
+        - name
         - maxThreads
-        - maxHashMib
+        - maxHash
         - variants
 
     ExternalEngineWork:
@@ -9694,7 +9694,7 @@ components:
           type: integer
           description: Number of threads to use for analysis.
           example: 4
-        hashMib:
+        hash:
           type: integer
           description: Hash table size to use for analysis, in MiB.
           example: 128
@@ -9723,7 +9723,7 @@ components:
       required:
         - sessionId
         - threads
-        - hashMib
+        - hash
         - maxDepth
         - multiPv
         - variant
