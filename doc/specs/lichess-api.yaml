@@ -6514,7 +6514,7 @@ paths:
             schema:
               $ref: '#/components/schemas/ExternalEngineInfo'
       responses:
-        "204":
+        "200":
           description: Thanks
           headers:
             Access-Control-Allow-Origin:
